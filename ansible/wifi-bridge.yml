@@ -11,13 +11,13 @@
 
     - name: Make sure eth0 is present in /etc/dhcpcd.conf
       lineinfile:
-        path: /etc/dhcpcd.conf.test
+        path: /etc/dhcpcd.conf
         line: 'interface eth0'
         state: present
 
     - name: Set static IP for eth0
       lineinfile:
-        path: /etc/dhcpcd.conf.test
+        path: /etc/dhcpcd.conf
         regexp: '^static ip_address=192.168.44.1/24'
         insertafter: '^interface eth0$'
         line: 'static ip_address=192.168.44.1/24'
@@ -35,7 +35,7 @@
 
     - name: Enable IP forwarding
       lineinfile:
-        path: /etc/sysctl.conf.test
+        path: /etc/sysctl.conf
         regexp: '^#?net\.ipv4\.ip_forward='
         line: 'net.ipv4.ip_forward=1'
 
@@ -44,7 +44,7 @@
 
     - name: Configure dnsmasq
       lineinfile:
-        path: /etc/dnsmasq.conf.test
+        path: /etc/dnsmasq.conf
         regexp: "{{item.regexp}}"
         line: "{{item.line}}"
       loop:
