@@ -3,7 +3,7 @@ Raspberry Pi WiFi-to-ethernet bridge
 
 tl;dr
 -----
-- Install Raspbian on a Raspberry Pi and set up WiFi with SSH enabled
+- Install Raspbian on a Raspberry Pi and [set up WiFi](#configure-wifi-on-the-wlan0-interface) with SSH enabled
 - Figure out the IP of the Raspberry Pi
 - `$ export RPI_IP=<Newly found IP>`
 - `$ ssh-copy-id pi@$RPI_IP`
