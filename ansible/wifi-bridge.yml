@@ -1,0 +1,57 @@
+- name: Playbook to set up wifi-to-ethernet bridge on Raspbian
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install packages
+      apt:
+        name:
+          - dnsmasq
+          - iptables-persistent
+        state: present
+
+    - name: Make sure eth0 is present in /etc/dhcpcd.conf
+      lineinfile:
+        path: /etc/dhcpcd.conf.test
+        line: 'interface eth0'
+        state: present
+
+    - name: Set static IP for eth0
+      lineinfile:
+        path: /etc/dhcpcd.conf.test
+        regexp: '^static ip_address=192.168.44.1/24'
+        insertafter: '^interface eth0$'
+        line: 'static ip_address=192.168.44.1/24'
+
+    - name: Restart dhcpcd
+      service:
+        name: dhcpcd
+        state: restarted
+
+    - name: Setup IP tables
+      shell: iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE; \
+             iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT; \
+             iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT; \
+             iptables-save
+
+    - name: Enable IP forwarding
+      lineinfile:
+        path: /etc/sysctl.conf.test
+        regexp: '^#?net\.ipv4\.ip_forward='
+        line: 'net.ipv4.ip_forward=1'
+
+    - name: Reload sysctl.conf
+      shell: sysctl -p
+
+    - name: Configure dnsmasq
+      lineinfile:
+        path: /etc/dnsmasq.conf.test
+        regexp: "{{item.regexp}}"
+        line: "{{item.line}}"
+      loop:
+        - { regexp: '^dhcp-range=', line: 'dhcp-range=192.168.44.50,192.168.44.150,12h' }
+        - { regexp: '^interface=', line: 'interface=eth0' }
+
+    - name: Restart dnsmasq
+      service:
+        name: dnsmasq
+        state: restarted
