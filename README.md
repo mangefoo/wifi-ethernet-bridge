@@ -20,7 +20,7 @@ quickly was a driver.
 
 Solution
 --------
-I ended up going for an unused Raspberry pi 3 that I previously used as a [RetroPi](https://retropie.org.uk) for playing
+I ended up going for an unused Raspberry Pi 3 that I previously used as a [RetroPi](https://retropie.org.uk) for playing
 old video games. It has integrated WiFi and ethernet port, which made it a perfect fit for this problem.
 
 Setting it up as a Wifi bridge requires the following steps:
@@ -96,6 +96,7 @@ most that we need. Only some small changes are required:
 - We need to make sure that we are only serving DHCP requests on the ethernet interface. Using the default values would
 make the device reply to requests on the Wifi network as well which will cause problems. 
 - We need to specify a network range within our 192.168.44.0/24 network that will be used for DHCP clients.
+
 To do this add the following to `/etc/dnsmasq.conf`:
 ```
 interface=eth0
