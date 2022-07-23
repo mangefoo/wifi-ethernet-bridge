@@ -60,7 +60,7 @@ for the ethernet interface. This is done by adding or changing the `interface et
 interface eth0
 static ip_address=192.168.44.1/24
 ```
-On thing that made me supprised was that the interface was not configured until the ethernet cable was plugged in.
+One thing that made me supprised was that the interface was not configured until the ethernet cable was plugged in.
 Running `ifconfig eth0` before the cable was plugged in showed no IP address on the interface, which made me waste some
 time troubleshooting.
 
