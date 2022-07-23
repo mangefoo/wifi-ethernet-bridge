@@ -7,7 +7,7 @@ tl;dr
 - Figure out the IP of the Raspberry Pi
 - `$ export RPI_IP=<Newly found IP>`
 - `$ ssh-copy-id pi@$RPI_IP`
-- `$ ansible-playbook -i $RPI_IP, ansible/wifi-bridge.yml -u pi`
+- `$ ansible-playbook -i $RPI_IP, ansible/wifi-ethernet-bridge.yml -u pi`
 
 Background
 ----------
