@@ -45,7 +45,7 @@ network={
 }
 ```
 When setting up a new device you can put the `wpa_supplicant.conf` file in the `/boot` directory of the SD card. This
-will then be copied to `/etc/wpa_supplicant.conf` on the first boot. This enables you to set up the device without any
+will then be copied to `/etc/wpa_supplicant/wpa_supplicant.conf` on the first boot. This enables you to set up the device without any
 keyboard or monitor. You can then log in through SSH and finalize the configuration. To enable SSH you will also need
  to create an empty `/boot/ssh` file on the SD card. The default username and password on Raspbian are ***pi*** and 
 ***raspberry***
