@@ -15,7 +15,7 @@ After changing internet provider our old fashion coax set-tob box was replaced b
 available was ethernet and due to the placement of our TV we would have to draw a fairly long cable to connect to the
 closest network switch. This and the fact that we were close to moving out of the apartment made me look for a different
 solution. I didn't want to spend too much money on this since it was a temporary solution, so I discarded the option
-of buying a commercial Wifi bridge product. I was also going to watch a game on TV the same night so getting it ready
+of buying a commercial WiFi bridge product. I was also going to watch a game on TV the same night so getting it ready
 quickly was a driver.
 
 Solution
@@ -23,7 +23,7 @@ Solution
 I ended up going for an unused Raspberry Pi 3 that I previously used as a [RetroPi](https://retropie.org.uk) for playing
 old video games. It has integrated WiFi and ethernet port, which made it a perfect fit for this problem.
 
-Setting it up as a Wifi bridge requires the following steps:
+Setting it up as a WiFi bridge requires the following steps:
 - [Configure WiFi on the wlan0 interface](#configure-wifi-on-the-wlan0-interface)
 - [Set a static IP on the eth0 interface](#set-a-static-ip-on-the-eth0-interface)
 - [Set up NAT forwarding on the eth0 interface](#set-up-nat-forwarding)
@@ -51,7 +51,7 @@ keyboard or monitor. You can then log in through SSH and finalize the configurat
 ***raspberry***
 
 ### Set a static IP on the eth0 interface
-Since we are the gateway and DHCP server of the wired network we need to set a static IP on the eterhnet interface. I
+Since we are the gateway and DHCP server of the wired network we need to set a static IP on the ethernet interface. I
 chose `192.168.44.0/24` as the network and `192.168.44.1` as the address of the Raspberry Pi. 
 
 **dhcpcd** is used for network configuration in the Raspbian distribution, so we will use that to configure the network 
@@ -60,7 +60,7 @@ for the ethernet interface. This is done by adding or changing the `interface et
 interface eth0
 static ip_address=192.168.44.1/24
 ```
-One thing that made me supprised was that the interface was not configured until the ethernet cable was plugged in.
+One thing that made me surprised was that the interface was not configured until the ethernet cable was plugged in.
 Running `ifconfig eth0` before the cable was plugged in showed no IP address on the interface, which made me waste some
 time troubleshooting.
 
@@ -94,7 +94,7 @@ I decided to use `dnsmasq` as a DHCP server since I hade previous experience wit
 up. I will also act as a DNS server for the clients in the network, hence the name. The default configuration contains
 most that we need. Only some small changes are required:
 - We need to make sure that we are only serving DHCP requests on the ethernet interface. Using the default values would
-make the device reply to requests on the Wifi network as well which will cause problems. 
+make the device reply to DHCP requests on the WiFi network as well which will cause problems. 
 - We need to specify a network range within our 192.168.44.0/24 network that will be used for DHCP clients.
 
 To do this add the following to `/etc/dnsmasq.conf`:
